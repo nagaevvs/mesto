@@ -21,3 +21,5 @@
 
 
 #### Ссылка на готовый проект, выложенный на GitHub Pages
+
+[Ссылка на проект на GitHub Pages](https://nagaevvs.github.io/mesto/).

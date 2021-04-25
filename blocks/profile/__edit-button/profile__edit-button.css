@@ -2,20 +2,28 @@
   border: none;
   width: 24px;
   height: 24px;
-  background-image: url(../../../images/edit-button.png);
+  background-image: url(../../../images/edit-button.svg);
   margin: 0 0 5px 0;
   padding: 0;
   background-color: transparent;
   cursor: pointer;
   grid-area: profile__edit-button;
   align-self: flex-end;
-  transition: background-image 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 .profile__edit-button:hover {
-  background-image: url(../../../images/edit-button_hover.png);
+  opacity: 0.6;
 }
 
 .profile__edit-button:active {
   border: none;
+}
+
+@media screen and (max-width: 425px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+    background-size: contain;
+  }
 }

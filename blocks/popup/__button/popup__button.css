@@ -11,6 +11,7 @@
   font: inherit;
   cursor: pointer;
   transition: opacity 0.4s ease;
+  border-radius: 2px;
 }
 
 .popup__button:hover {

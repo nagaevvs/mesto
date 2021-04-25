@@ -3,7 +3,7 @@
   cursor: pointer;
   margin: 0;
   padding: 0;
-  background-image: url(../../../images/like.png);
+  background-image: url(../../../images/like.svg);
   background-size: contain;
   background-repeat: no-repeat;
   width: 22px;
@@ -11,13 +11,14 @@
   border: none;
   font: inherit;
   color: inherit;
-  transition: background-image 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .element__like:hover {
-  background-image: url(../../../images/like-hover.png);
+  opacity: 0.5;
 }
 
 .element__like:active {
-  background-image: url(../../../images/like-active.png);
+  background-image: url(../../../images/like-active.svg);
+  opacity: 1;
 }

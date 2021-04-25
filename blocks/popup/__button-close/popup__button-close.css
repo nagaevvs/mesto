@@ -2,8 +2,9 @@
   position: absolute;
   top: -40px;
   right: -40px;
-  background-image: url(../../../images/сlose-icon.png);
-  background-size: contain;
+  background-image: url(../../../images/сlose-icon.svg);
+  background-size: auto;
+  background-position: center;
   background-repeat: no-repeat;
   width: 40px;
   height: 40px;
@@ -13,11 +14,11 @@
   color: inherit;
   background-color: transparent;
   cursor: pointer;
-  transition: background-image 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
 .popup__button-close:hover {
-  background-image: url(../../../images/сlose-icon\ hover.png);
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 640px) {
