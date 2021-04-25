@@ -1,0 +1,24 @@
+.element__like {
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  background-image: url(../../../images/like.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 19px;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-image 0.3s ease-in-out;
+}
+
+.element__like:hover {
+  background-image: url(../../../images/like-hover.png);
+}
+
+.element__like:active {
+  background-image: url(../../../images/like-active.png);
+}
