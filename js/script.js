@@ -11,8 +11,8 @@ let buttonClose = document.querySelector('.popup__button-close');
 function openPopUp() {
 
     popUp.classList.add('popup_opened');
-    nameInput.setAttribute('value', `${profileName.textContent}`);
-    jobInput.setAttribute('value', `${profileJob.textContent}`);
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileJob.textContent;
 }
 
 function closePopUp() {
@@ -21,7 +21,7 @@ function closePopUp() {
 }
 
 function formSubmitHandler(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+    evt.preventDefault();
     profileName.textContent = nameInput.value
     profileJob.textContent = jobInput.value
     closePopUp()
