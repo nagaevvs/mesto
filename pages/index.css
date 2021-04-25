@@ -2,6 +2,10 @@
 
 @import url(../vendor/normalize.css);
 
+/*font Inter*/
+
+@import url(../vendor/Inter/inter.css);
+
 /*body*/
 
 @import url(../blocks/body/body.css);
