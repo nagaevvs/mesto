@@ -11,7 +11,6 @@
   border: none;
   font: inherit;
   color: inherit;
-  cursor: pointer;
   transition: background-image 0.3s ease-in-out;
 }
 
