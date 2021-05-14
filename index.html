@@ -9,6 +9,15 @@
 </head>
 
 <body class="body">
+  <template id="element">
+    <div class="element">
+      <img class="element__image" src="" alt="" />
+      <div class="element__description">
+        <h2 class="element__title"></h2>
+        <button class="element__like" type="button"></button>
+      </div>
+    </div>
+  </template>
   <div class="popup">
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
@@ -23,6 +32,22 @@
       </form>
     </div>
   </div>
+
+  <div class="popup-add-cards">
+    <div class="popup__container">
+      <button class="popup__button-close" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+
+      <form class="popup__form" name="popup-form">
+        <fieldset class="popup__fieldset">
+          <input class="popup__input" type="text" name="title" placeholder="Название" />
+          <input class="popup__input" type="text" name="image" placeholder="Ссылка на картинку" />
+          <button id="add-card-button" class="popup__button" type="submit">Создать</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
   <div class="page">
     <header class="header">
       <img src="images/logo.svg" alt="Логотип" class="header__logo" />
@@ -42,48 +67,8 @@
       </section>
 
       <section class="elements">
-        <div class="element">
-          <img src="images/element/aurelien-romain-w15cKfn6mng-unsplash.jpg" alt="Фотография города Ростов" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Ростов Великий</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
-        <div class="element">
-          <img src="images/element/egor-myznik-usVl8Y2ahk8-unsplash.jpg" alt="Фотография города Сергиев Посад" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Сергиев Посад</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
-        <div class="element">
-          <img src="images/element/galina-tcarkova-cXsnE8WMpCM-unsplash.jpg" alt="Фотография города Переславль-Залесский" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Переславль-Залесский</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
-        <div class="element">
-          <img src="images/element/max-denisov-Pwjks20hLB0-unsplash.jpg" alt="Фотография города Кострома" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Кострома</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
-        <div class="element">
-          <img src="images/element/natalya-letunova-y3n3Y1uveH4-unsplash.jpg" alt="Фотография города Суздаль" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Суздаль</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
-        <div class="element">
-          <img src="images/element/yura-timoshenko-N4ltKKKAnsA-unsplash.jpg" alt="Фотография города Ярославль" class="element__image" />
-          <div class="element__description">
-            <h2 class="element__title">Ярославль</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </div>
+        
+
       </section>
     </main>
     <footer class="footer">

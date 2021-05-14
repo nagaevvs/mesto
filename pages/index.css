@@ -59,3 +59,7 @@
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__button/popup__button.css);
 @import url(../blocks/popup/__button-close/popup__button-close.css);
+
+/*popup-add-cards*/
+@import url(../blocks/popup-add-cards/popup-add-cards.css);
+@import url(../blocks/popup-add-cards/_opened/popup-add-cards_opened.css);
