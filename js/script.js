@@ -1,39 +1,39 @@
 //Попапы
-let popUpUserEditProfile = document.querySelector('#popup-user-edit-profile')
-let popUpUserAddCards = document.querySelector('#popup-user-add-card')
-let popUpViewImage = document.querySelector('#popup-view-image')
+const popUpUserEditProfile = document.querySelector('#popup-user-edit-profile')
+const popUpUserAddCards = document.querySelector('#popup-user-add-card')
+const popUpViewImage = document.querySelector('#popup-view-image')
 
 //Кнопки закрытия попапов
-let buttonClosePopUpViewImage = popUpViewImage.querySelector('.popup__button-close')
-let buttonClosePopUpAddCards = popUpUserAddCards.querySelector('.popup__button-close');
-let buttonClosePopUpEditProfile = popUpUserEditProfile.querySelector('.popup__button-close')
+const buttonClosePopUpViewImage = popUpViewImage.querySelector('.popup__button-close')
+const buttonClosePopUpAddCards = popUpUserAddCards.querySelector('.popup__button-close');
+const buttonClosePopUpEditProfile = popUpUserEditProfile.querySelector('.popup__button-close')
 
 //Кнопка отрывает попап редактирования профиля
-let editButton = document.querySelector('.profile__edit-button')
+const editButton = document.querySelector('.profile__edit-button')
 
 //Форма редактирования профиля
-let formEditProfile = popUpUserEditProfile.querySelector('.popup__form')
-let inputNameEditProfile = formEditProfile.querySelector('[name="name"]')
-let inputJobEditProfile = formEditProfile.querySelector('[name="job"]')
+const formEditProfile = popUpUserEditProfile.querySelector('.popup__form')
+const inputNameEditProfile = formEditProfile.querySelector('[name="name"]')
+const inputJobEditProfile = formEditProfile.querySelector('[name="job"]')
 
 //Отображаемая информация в профиле
-let profileInfo = document.querySelector('.profile__info')
-let profileName = profileInfo.querySelector('.profile__name')
-let profileJob = profileInfo.querySelector('.profile__about')
+const profileInfo = document.querySelector('.profile__info')
+const profileName = profileInfo.querySelector('.profile__name')
+const profileJob = profileInfo.querySelector('.profile__about')
 
 
 //Открывает попап добавления новой карточки
-let buttonOpenPopUpAddCards = document.querySelector('.profile__add-button');
+const buttonOpenPopUpAddCards = document.querySelector('.profile__add-button');
 
 //Форма добавления новой карточки
-let formAddCard = popUpUserAddCards.querySelector('.popup__form')
-let inputTitleAddCards = popUpUserAddCards.querySelector('[name="title"]')
-let inputImageAddCards = popUpUserAddCards.querySelector('[name="image"]')
+const formAddCard = popUpUserAddCards.querySelector('.popup__form')
+const inputTitleAddCards = popUpUserAddCards.querySelector('[name="title"]')
+const inputImageAddCards = popUpUserAddCards.querySelector('[name="image"]')
 
 //Картинка попапа
-let imageForPopUp = popUpViewImage.querySelector('.popup__image');
+const imageForPopUp = popUpViewImage.querySelector('.popup__image');
 //Подпись к картинке
-let figcaptionForPopUp = popUpViewImage.querySelector('.popup__figcaption')
+const figcaptionForPopUp = popUpViewImage.querySelector('.popup__figcaption')
 
 //Содержимое шаблона для создания карточки
 const cardTemplate = document.querySelector('#element').content;
@@ -41,33 +41,7 @@ const cardTemplate = document.querySelector('#element').content;
 const blockElements = document.querySelector('.elements');
 
 
-//Массив мест для карточек
-const initialCards = [{
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
 
-];
 
 //создаем карточки из массива
 initialCards.forEach(function(item) {

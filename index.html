@@ -9,18 +9,7 @@
 </head>
 
 <body class="body">
-  <template id="element">
-    <div class="element">
-      <button class="element__delete" type="button"></button>
-      <img class="element__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg" alt="Фотография" />
-      <div class="element__description">
-        <h2 class="element__title"></h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </div>
-
-
-  </template>
+  
 
   <div id="popup-view-image" class="popup">
     <div class="popup__view-image-container">
@@ -34,10 +23,10 @@
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="popup-form">
+      <form class="popup__form" name="form-edit-profile">
         <fieldset class="popup__fieldset">
-          <input class="popup__input" type="text" name="name" />
-          <input class="popup__input" type="text" name="job" />
+          <input class="popup__input" type="text" name="name" required />
+          <input class="popup__input" type="text" name="job" required />
           <button class="popup__button" type="submit">Сохранить</button>
         </fieldset>
       </form>
@@ -48,10 +37,10 @@
     <div class="popup__container">
       <button class="popup__button-close" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" name="popup-form">
+      <form class="popup__form" name="form-add-card">
         <fieldset class="popup__fieldset">
-          <input class="popup__input" type="text" name="title" placeholder="Название" />
-          <input class="popup__input" type="text" name="image" placeholder="Ссылка на картинку" />
+          <input class="popup__input" type="text" name="title" placeholder="Название" required />
+          <input class="popup__input" type="url" name="image" placeholder="Ссылка на картинку" required />
           <button id="add-card-button" class="popup__button" type="submit">Создать</button>
         </fieldset>
       </form>
@@ -84,9 +73,22 @@
     <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
+    
+    <template id="element">
+      <div class="element">
+        <button class="element__delete" type="button"></button>
+        <img class="element__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg" alt="Фотография" />
+        <div class="element__description">
+          <h2 class="element__title"></h2>
+          <button class="element__like" type="button"></button>
+        </div>
+      </div>
+    </template>
   </div>
 
+  <script src="js/initial-сards.js"></script>
   <script src="js/script.js"></script>
+  
 </body>
 
 </html>
