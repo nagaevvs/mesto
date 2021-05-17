@@ -56,17 +56,16 @@ initialCards.forEach(function(item) {
 
 // Добавление пользователем карточки
 function createCardUser() {
-  initialCards.push({ name: `${inputTitleAddCards.value}`, link: `${inputImageAddCards.value}` })
+
   const createCard = cardTemplate.querySelector('.element').cloneNode(true);
-  createCard.querySelector('.element__image').src = `${initialCards[initialCards.length - 1].link}`;
-  createCard.querySelector('.element__title').textContent = `${initialCards[initialCards.length - 1].name}`;
+  createCard.querySelector('.element__image').src = `${inputImageAddCards.value}`;
+  createCard.querySelector('.element__title').textContent = `${inputTitleAddCards.value}`;
   likeCard(createCard)
   deleteCard(createCard)
   viewFullScreeImage(createCard)
-  closePopUp(popUpUserAddCards)
-  inputTitleAddCards.value = ''
-  inputImageAddCards.value = ''
   blockElements.prepend(createCard);
+  formAddCard.reset()
+
 }
 
 //Открывает попап
@@ -102,17 +101,19 @@ function viewFullScreeImage(card) {
     figcaptionForPopUp.textContent = `${card.querySelector('.element__title').textContent}`;
   });
 
-  buttonClosePopUpViewImage.addEventListener('click', function() {
-    closePopUp(popUpViewImage)
-  });
+
+}
+
+function refreshProfile() {
+  profileName.textContent = inputNameEditProfile.value
+  profileJob.textContent = inputJobEditProfile.value
 }
 
 
 //Обновляет данные в профиле
 formEditProfile.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  profileName.textContent = inputNameEditProfile.value
-  profileJob.textContent = inputJobEditProfile.value
+  refreshProfile()
   closePopUp(popUpUserEditProfile)
 
 });
@@ -123,6 +124,12 @@ editButton.addEventListener('click', function() {
   inputNameEditProfile.value = profileName.textContent;
   inputJobEditProfile.value = profileJob.textContent;
 });
+
+//Закрывает попап c изображением
+buttonClosePopUpViewImage.addEventListener('click', function() {
+  closePopUp(popUpViewImage)
+});
+
 
 //Закрывает попап редактирования данных в профиле нажатием на крестик
 buttonClosePopUpEditProfile.addEventListener('click', function() {
@@ -143,4 +150,5 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 formAddCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
   createCardUser()
+  closePopUp(popUpUserAddCards)
 });
