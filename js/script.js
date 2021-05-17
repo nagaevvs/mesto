@@ -45,28 +45,35 @@ const blockElements = document.querySelector('.elements');
 
 //создаем карточки из массива
 initialCards.forEach(function(item) {
+
   const createCard = cardTemplate.querySelector('.element').cloneNode(true);
-  createCard.querySelector('.element__image').src = `${item.link}`;
-  createCard.querySelector('.element__title').textContent = `${item.name}`;
   likeCard(createCard)
   deleteCard(createCard)
   viewFullScreeImage(createCard)
+
+  createCard.querySelector('.element__image').src = `${item.link}`;
+  createCard.querySelector('.element__title').textContent = `${item.name}`;
   blockElements.prepend(createCard);
 });
 
-// Добавление пользователем карточки
-function createCardUser() {
+
+
+
+function createCard() {
 
   const createCard = cardTemplate.querySelector('.element').cloneNode(true);
-  createCard.querySelector('.element__image').src = `${inputImageAddCards.value}`;
-  createCard.querySelector('.element__title').textContent = `${inputTitleAddCards.value}`;
   likeCard(createCard)
   deleteCard(createCard)
   viewFullScreeImage(createCard)
-  blockElements.prepend(createCard);
-  formAddCard.reset()
-
+  return createCard
 }
+
+function addCard(createCard) {
+  createCard.querySelector('.element__image').src = `${inputImageAddCards.value}`;
+  createCard.querySelector('.element__title').textContent = `${inputTitleAddCards.value}`;
+  blockElements.prepend(createCard);
+}
+
 
 //Открывает попап
 function openPopUp(popUpName) {
@@ -149,6 +156,8 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 //Добавляет новую карточку места
 formAddCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  createCardUser()
+
+  addCard(createCard())
   closePopUp(popUpUserAddCards)
+  formAddCard.reset()
 });
