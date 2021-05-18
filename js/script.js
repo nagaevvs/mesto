@@ -51,6 +51,53 @@ initialCards.forEach(function(item) {
 
 
 
+/* "В качестве аргумента функция createCard должна принимать данные карточки (лучше как объект).
+...
+Я не разобрался как сделать функцию createCard используя в качестве аргумента ОБЪЕКТ универсальной 
+для создания изначального массива карточек и для добавления карточки вручную.
+Функция createCard без проблем работает для создания карточек из массива при загрузке страницы вот так:
+
+function createCard(object) {
+  const createCard = cardTemplate.querySelector('.element').cloneNode(true);
+  likeCard(createCard);
+  deleteCard(createCard);
+  viewFullScreeImage(createCard);
+  createCard.querySelector('.element__image').src = `${object.link}`;
+  createCard.querySelector('.element__image').alt = `${object.name}`;
+  createCard.querySelector('.element__title').textContent = `${object.name}`;
+  return createCard;
+};
+...........
+Но тогда, для того что бы функция работала и для добавления карточки из формы мне тоже нужен объект. 
+Я могу его создать, например:
+
+const objectInputsAddCardForm = {
+  name: ,
+  link: ,
+};
+............
+И тогда я мог бы использовать createCard(objectInputsAddCardForm) для добавления карточки через форму. 
+Получается, что в качестве значений для ключей в объекте нужно использовать value инпутов формы:
+
+const objectInputsAddCardForm = {
+  name: inputTitleAddCards.value,
+  link: inputImageAddCards.value,
+};
+
+Что в прочем не работает. js как я понял не позволяет использовать в качестве значений объекта выражения и переменные.
+............
+Проверял этот объект с готовыми строками - работает:
+const objectInputsAddCardForm = {
+  name: 'Архыз',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+};
+............
+Подскажите, я неправильно использую объект или подразумевается совсем иное решение? 
+
+*/
+
+
+
 function createCard(scrCards, nameCards) {
   const createCard = cardTemplate.querySelector('.element').cloneNode(true);
   likeCard(createCard);
