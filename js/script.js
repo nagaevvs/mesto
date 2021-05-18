@@ -45,25 +45,26 @@ const blockElements = document.querySelector('.elements');
 
 //создаем карточки из массива
 initialCards.forEach(function(item) {
-  addCard(createCard(), item.link, item.name);
+  addCard(createCard(item.link, item.name));
 });
 
 
 
 
-function createCard() {
+function createCard(scrCards, nameCards) {
   const createCard = cardTemplate.querySelector('.element').cloneNode(true);
   likeCard(createCard);
   deleteCard(createCard);
   viewFullScreeImage(createCard);
+  createCard.querySelector('.element__image').src = `${scrCards}`;
+  createCard.querySelector('.element__image').alt = `${nameCards}`;
+  createCard.querySelector('.element__title').textContent = `${nameCards}`;
   return createCard;
 };
 
 
-function addCard(createCard, scrCards, nameCards) {
-  createCard.querySelector('.element__image').src = `${scrCards}`;
-  createCard.querySelector('.element__image').alt = `${nameCards}`;
-  createCard.querySelector('.element__title').textContent = `${nameCards}`;
+function addCard(createCard) {
+  
   blockElements.prepend(createCard);
 };
 
@@ -125,7 +126,7 @@ editButton.addEventListener('click', function() {
 
 //Закрывает попап c изображением
 buttonClosePopUpViewImage.addEventListener('click', function() {
-  closePopUp(popUpViewImage)
+  closePopUp(popUpViewImage);
 });
 
 
@@ -147,7 +148,7 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 //Добавляет новую карточку места
 formAddCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  addCard(createCard(), inputImageAddCards.value, inputTitleAddCards.value);
+  addCard(createCard(inputImageAddCards.value, inputTitleAddCards.value));
   closePopUp(popUpUserAddCards);
   formAddCard.reset();
 });
