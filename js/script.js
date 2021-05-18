@@ -45,74 +45,26 @@ const blockElements = document.querySelector('.elements');
 
 //создаем карточки из массива
 initialCards.forEach(function(item) {
-  addCard(createCard(item.link, item.name));
+  addCard(createCard(item));
 });
 
 
 
 
-/* "В качестве аргумента функция createCard должна принимать данные карточки (лучше как объект).
-...
-Я не разобрался как сделать функцию createCard используя в качестве аргумента ОБЪЕКТ универсальной 
-для создания изначального массива карточек и для добавления карточки вручную.
-Функция createCard без проблем работает для создания карточек из массива при загрузке страницы вот так:
-
-function createCard(object) {
-  const createCard = cardTemplate.querySelector('.element').cloneNode(true);
-  likeCard(createCard);
-  deleteCard(createCard);
-  viewFullScreeImage(createCard);
-  createCard.querySelector('.element__image').src = `${object.link}`;
-  createCard.querySelector('.element__image').alt = `${object.name}`;
-  createCard.querySelector('.element__title').textContent = `${object.name}`;
-  return createCard;
-};
-...........
-Но тогда, для того что бы функция работала и для добавления карточки из формы мне тоже нужен объект. 
-Я могу его создать, например:
-
-const objectInputsAddCardForm = {
-  name: ,
-  link: ,
-};
-............
-И тогда я мог бы использовать createCard(objectInputsAddCardForm) для добавления карточки через форму. 
-Получается, что в качестве значений для ключей в объекте нужно использовать value инпутов формы:
-
-const objectInputsAddCardForm = {
-  name: inputTitleAddCards.value,
-  link: inputImageAddCards.value,
-};
-
-Что в прочем не работает. js как я понял не позволяет использовать в качестве значений объекта выражения и переменные.
-............
-Проверял этот объект с готовыми строками - работает:
-const objectInputsAddCardForm = {
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-};
-............
-Подскажите, я неправильно использую объект или подразумевается совсем иное решение? 
-
-*/
-
-
-
-function createCard(scrCards, nameCards) {
-  const createCard = cardTemplate.querySelector('.element').cloneNode(true);
-  likeCard(createCard);
-  deleteCard(createCard);
-  viewFullScreeImage(createCard);
-  createCard.querySelector('.element__image').src = `${scrCards}`;
-  createCard.querySelector('.element__image').alt = `${nameCards}`;
-  createCard.querySelector('.element__title').textContent = `${nameCards}`;
-  return createCard;
+function createCard(item) {
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  likeCard(cardElement);
+  deleteCard(cardElement);
+  viewFullScreeImage(cardElement);
+  cardElement.querySelector('.element__image').src = `${item.link}`;
+  cardElement.querySelector('.element__image').alt = `${item.name}`;
+  cardElement.querySelector('.element__title').textContent = `${item.name}`;
+  return cardElement;
 };
 
 
-function addCard(createCard) {
-  
-  blockElements.prepend(createCard);
+function addCard(cardElement) {
+  blockElements.prepend(cardElement);
 };
 
 
@@ -195,7 +147,12 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 //Добавляет новую карточку места
 formAddCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  addCard(createCard(inputImageAddCards.value, inputTitleAddCards.value));
+
+  addCard(createCard({
+    name: inputTitleAddCards.value,
+    link: inputImageAddCards.value,
+  }));
+
   closePopUp(popUpUserAddCards);
   formAddCard.reset();
 });
