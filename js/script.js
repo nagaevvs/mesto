@@ -66,26 +66,27 @@ function addCard(cardElement) {
 //Открывает попап
 function openPopUp(popUpName) {
   popUpName.classList.add('popup_opened');
-  addCloseEsc()
-  addCloseClick(popUpName)
+  window.addEventListener('keydown', escapeListen)
+
 };
 
 //Добавляет обработчик для закрытия попапа по клику
-function addCloseClick(popUpName) {
-  popUpName.addEventListener('click', evt => {
-    if (!popUpName.querySelector('.container').contains(evt.target)) {
-      closePopUp()
-    }
-  })
-}
-
-//закрывает попап
-function closePopUp() {
+function addCloseClick() {
   const popUP = Array.from(document.querySelectorAll('.popup'))
   popUP.forEach((inputElement) => {
-    inputElement.classList.remove('popup_opened');
+    inputElement.addEventListener('mousedown', evt => {
+      if (!inputElement.querySelector('.container').contains(evt.target)) {
+        closePopUp(inputElement)
+      }
+    })
   });
-  removeCloseEsc()
+}
+
+addCloseClick()
+  //закрывает попап
+function closePopUp(popUpName) {
+  popUpName.classList.remove('popup_opened');
+  window.removeEventListener('keydown', escapeListen)
 };
 
 //лайкает карточку
@@ -121,18 +122,9 @@ function refreshProfile() {
 //Закрывает попап по нажатию на esc
 function escapeListen(evt) {
   if (evt.key === "Escape") {
-    closePopUp()
+    document.querySelector('.popup_opened').classList.remove('popup_opened');
+    window.removeEventListener('keydown', escapeListen)
   }
-}
-
-//Добавляет обработчик для закрытия попапа ESC
-function addCloseEsc() {
-  window.addEventListener('keydown', escapeListen)
-}
-
-//Удаляет обработчик для закрытия попапа ESC
-function removeCloseEsc() {
-  window.removeEventListener('keydown', escapeListen)
 }
 
 //ОБРАБОТЧИКИ
@@ -141,7 +133,7 @@ function removeCloseEsc() {
 formEditProfile.addEventListener('submit', function(evt) {
   evt.preventDefault();
   refreshProfile();
-  closePopUp();
+  closePopUp(popUpUserEditProfile);
 });
 
 //Открывает попап для редактирования данных в профиле
@@ -149,16 +141,18 @@ editButton.addEventListener('click', function() {
   openPopUp(popUpUserEditProfile);
   inputNameEditProfile.value = profileName.textContent;
   inputJobEditProfile.value = profileJob.textContent;
+  hideInputError(popUpUserEditProfile, inputNameEditProfile, configValidation)
+  hideInputError(popUpUserEditProfile, inputJobEditProfile, configValidation)
 });
 
 //Закрывает попап c изображением
 buttonClosePopUpViewImage.addEventListener('click', function() {
-  closePopUp();
+  closePopUp(popUpViewImage);
 });
 
 //Закрывает попап редактирования данных в профиле нажатием на крестик
 buttonClosePopUpEditProfile.addEventListener('click', function() {
-  closePopUp();
+  closePopUp(popUpUserEditProfile);
 });
 
 //Открывает попап добавления карточек места
@@ -168,18 +162,18 @@ buttonOpenPopUpAddCards.addEventListener('click', function() {
 
 //Закрывает попап добавления карточки нажатием на крестик
 buttonClosePopUpAddCards.addEventListener('click', function() {
-  closePopUp();
+  closePopUp(popUpUserAddCards);
 });
 
 //Сабмит формы добавляет новую карточку места
 formAddCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
-
   addCard(createCard({
     name: inputTitleAddCards.value,
     link: inputImageAddCards.value,
   }));
-
-  closePopUp();
+  closePopUp(popUpUserAddCards);
   formAddCard.reset();
+  popUpUserAddCards.querySelector('.popup__button').classList.add('popup__button_disabled');
+  popUpUserAddCards.querySelector('.popup__button').setAttribute('disabled', true);
 });
