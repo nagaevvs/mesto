@@ -3,6 +3,8 @@ const popUpUserEditProfile = document.querySelector('#popup-user-edit-profile');
 const popUpUserAddCards = document.querySelector('#popup-user-add-card');
 const popUpViewImage = document.querySelector('#popup-view-image');
 
+
+
 //Кнопки закрытия попапов (крестики)
 const buttonClosePopUpViewImage = popUpViewImage.querySelector('.popup__button-close');
 const buttonClosePopUpAddCards = popUpUserAddCards.querySelector('.popup__button-close');
@@ -12,9 +14,9 @@ const buttonClosePopUpEditProfile = popUpUserEditProfile.querySelector('.popup__
 const editButton = document.querySelector('.profile__edit-button');
 
 //Форма редактирования профиля
-const formEditProfile = document.forms.formprofile
-const inputNameEditProfile = formEditProfile.elements.name
-const inputJobEditProfile = formEditProfile.elements.job
+const formEditProfile = document.forms.formprofile;
+const inputNameEditProfile = formEditProfile.elements.name;
+const inputJobEditProfile = formEditProfile.elements.job;
 
 //Отображаемая информация в профиле
 const profileInfo = document.querySelector('.profile__info');
@@ -25,9 +27,12 @@ const profileJob = profileInfo.querySelector('.profile__about');
 const buttonOpenPopUpAddCards = document.querySelector('.profile__add-button');
 
 //Форма добавления новой карточки
-const formAddCard = document.forms.formcard
-const inputTitleAddCards = formAddCard.elements.title
-const inputImageAddCards = formAddCard.elements.image
+const formAddCard = document.forms.formcard;
+const inputTitleAddCards = formAddCard.elements.title;
+const inputImageAddCards = formAddCard.elements.image;
+
+//Сабмит формы добавления места
+const submitPopUpAddCards = popUpUserAddCards.querySelector('.popup__button');
 
 //Картинка попапа
 const imageForPopUp = popUpViewImage.querySelector('.popup__image');
@@ -66,17 +71,17 @@ function addCard(cardElement) {
 //Открывает попап
 function openPopUp(popUpName) {
   popUpName.classList.add('popup_opened');
-  window.addEventListener('keydown', escapeListen)
+  window.addEventListener('keydown', escapeListen);
 
 };
 
 //Добавляет обработчик для закрытия попапа по клику
 function addCloseClick() {
-  const popUP = Array.from(document.querySelectorAll('.popup'))
+  const popUP = Array.from(document.querySelectorAll('.popup'));
   popUP.forEach((inputElement) => {
     inputElement.addEventListener('mousedown', evt => {
       if (!inputElement.querySelector('.container').contains(evt.target)) {
-        closePopUp(inputElement)
+        closePopUp(inputElement);
       }
     })
   });
@@ -86,7 +91,7 @@ addCloseClick()
   //закрывает попап
 function closePopUp(popUpName) {
   popUpName.classList.remove('popup_opened');
-  window.removeEventListener('keydown', escapeListen)
+  window.removeEventListener('keydown', escapeListen);
 };
 
 //лайкает карточку
@@ -122,8 +127,7 @@ function refreshProfile() {
 //Закрывает попап по нажатию на esc
 function escapeListen(evt) {
   if (evt.key === "Escape") {
-    document.querySelector('.popup_opened').classList.remove('popup_opened');
-    window.removeEventListener('keydown', escapeListen)
+    closePopUp(document.querySelector('.popup_opened'));
   }
 }
 
@@ -141,8 +145,8 @@ editButton.addEventListener('click', function() {
   openPopUp(popUpUserEditProfile);
   inputNameEditProfile.value = profileName.textContent;
   inputJobEditProfile.value = profileJob.textContent;
-  hideInputError(popUpUserEditProfile, inputNameEditProfile, configValidation)
-  hideInputError(popUpUserEditProfile, inputJobEditProfile, configValidation)
+  hideInputError(popUpUserEditProfile, inputNameEditProfile, configValidation);
+  hideInputError(popUpUserEditProfile, inputJobEditProfile, configValidation);
 });
 
 //Закрывает попап c изображением
@@ -174,6 +178,6 @@ formAddCard.addEventListener('submit', function(evt) {
   }));
   closePopUp(popUpUserAddCards);
   formAddCard.reset();
-  popUpUserAddCards.querySelector('.popup__button').classList.add('popup__button_disabled');
-  popUpUserAddCards.querySelector('.popup__button').setAttribute('disabled', true);
+  submitPopUpAddCards.classList.add('popup__button_disabled');
+  submitPopUpAddCards.setAttribute('disabled', true);
 });
