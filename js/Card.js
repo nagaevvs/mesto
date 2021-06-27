@@ -1,15 +1,14 @@
-import { openPopUp, popUpViewImage, imageForPopUp, figcaptionForPopUp } from './index.js'
-
 class Card {
-  constructor(data) {
+  constructor(data, templateSelector, viewFullScreenImage) {
     this._name = data.name;
     this._link = data.link;
-
+    this._templateSelector = templateSelector
+    this._viewFullScreenImage = viewFullScreenImage
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector('#element')
+      .querySelector(`${this._templateSelector}`)
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -35,7 +34,7 @@ class Card {
     });
 
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._viewFullScreeImage();
+      this._viewFullScreenImage(this._element);
     });
   }
 
@@ -45,15 +44,11 @@ class Card {
   }
 
   _deleteCard() {
-    this._element.remove()
+    this._element.remove();
+    this._element = null;
   };
 
-  _viewFullScreeImage() {
-    openPopUp(popUpViewImage);
-    imageForPopUp.src = `${this._link}`;
-    imageForPopUp.alt = `${this._name}`;
-    figcaptionForPopUp.textContent = `${this._name}`;
-  };
+
 
 }
 

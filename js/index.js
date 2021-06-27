@@ -47,32 +47,37 @@ const figcaptionForPopUp = popUpViewImage.querySelector('.popup__figcaption');
 const blockElements = document.querySelector('.elements');
 
 
+//Создает карточку 
+function createCard(data, templateSelector) {
+  const card = new Card(data, templateSelector, viewFullScreenImage);
+  const cardElement = card.generateCard();
+  blockElements.prepend(cardElement);
+};
+
+
 //Создает карточки из массива
 initialCards.forEach((item) => {
-  const card = new Card(item);
-  const cardElement = card.generateCard();
-  blockElements.append(cardElement);
+  createCard(item, '#element')
 });
 
 
-const formList = Array.from(document.querySelectorAll(`.popup__form`));
-//Включает валидацию форм
-formList.forEach((formElement) => {
-  const formValid = new FormValidator(configValidation, formElement);
-  formValid.enableValidation();
+//Создает экземпляры класса FormValidator для форм
+const validFormEditProfile = new FormValidator(configValidation, formEditProfile);
+validFormEditProfile.enableValidation();
+const validFormAddCard = new FormValidator(configValidation, formAddCard);
+validFormAddCard.enableValidation();
 
-});
 
 //Открывает попап
-function openPopUp(popUpName) {
-  popUpName.classList.add('popup_opened');
-  window.addEventListener('keydown', escapeListen);
+function openPopUp(popup) {
+  popup.classList.add('popup_opened');
+  window.addEventListener('keydown', listenEscape);
 };
 
 //закрывает попап
-function closePopUp(popUpName) {
-  popUpName.classList.remove('popup_opened');
-  window.removeEventListener('keydown', escapeListen);
+function closePopUp(popup) {
+  popup.classList.remove('popup_opened');
+  window.removeEventListener('keydown', listenEscape);
 };
 
 //обновляет информацию в профиле
@@ -82,7 +87,7 @@ function refreshProfile() {
 };
 
 //Закрывает попап по нажатию на esc
-function escapeListen(evt) {
+function listenEscape(evt) {
   if (evt.key === "Escape") {
     closePopUp(document.querySelector('.popup_opened'));
   }
@@ -90,13 +95,24 @@ function escapeListen(evt) {
 
 //ОБРАБОТЧИКИ
 
+//открывает и зарывает попап с фотографией
+function viewFullScreenImage(card) {
+
+  openPopUp(popUpViewImage);
+  imageForPopUp.src = `${card.querySelector('.element__image').src}`;
+  imageForPopUp.alt = `${card.querySelector('.element__title').textContent}`;
+  figcaptionForPopUp.textContent = `${card.querySelector('.element__title').textContent}`;
+
+};
+
+
 //Добавляет обработчик для закрытия попапа по клику
 function addCloseClick() {
-  const popUP = Array.from(document.querySelectorAll('.popup'));
-  popUP.forEach((inputElement) => {
-    inputElement.addEventListener('mousedown', evt => {
-      if (!inputElement.querySelector('.container').contains(evt.target)) {
-        closePopUp(inputElement);
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener('mousedown', evt => {
+      if (!popupElement.querySelector('.container').contains(evt.target)) {
+        closePopUp(popupElement);
       }
     })
   });
@@ -110,21 +126,14 @@ formEditProfile.addEventListener('submit', function(evt) {
   closePopUp(popUpUserEditProfile);
 });
 
-//Скрывает текст ошибки
-function hideError(form, inputElement) {
-  const errorElement = form.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(`popup__input_type_error`);
-  errorElement.classList.remove(`popup__error_visible`);
-  errorElement.textContent = '';
-}
+
 
 //Открывает попап для редактирования данных в профиле
 editButton.addEventListener('click', function() {
   openPopUp(popUpUserEditProfile);
   inputNameEditProfile.value = profileName.textContent;
   inputJobEditProfile.value = profileJob.textContent;
-  hideError(popUpUserEditProfile, inputNameEditProfile);
-  hideError(popUpUserEditProfile, inputJobEditProfile);
+  validFormEditProfile.hideError()
 
 });
 
@@ -151,17 +160,13 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 //Сабмит формы добавляет новую карточку места
 formAddCard.addEventListener('submit', function(evt) {
   //evt.preventDefault();
-  const card = new Card({
+
+  createCard({
     name: inputTitleAddCards.value,
     link: inputImageAddCards.value,
-  });
-  const cardElement = card.generateCard();
-  blockElements.append(cardElement);
+  }, '#element')
 
   closePopUp(popUpUserAddCards);
   formAddCard.reset();
-  submitPopUpAddCards.classList.add('popup__button_disabled');
-  submitPopUpAddCards.setAttribute('disabled', true);
+  validFormAddCard.toggleButtonState()
 });
-
-export { openPopUp, popUpViewImage, imageForPopUp, figcaptionForPopUp }
