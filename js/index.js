@@ -51,13 +51,17 @@ const blockElements = document.querySelector('.elements');
 function createCard(data, templateSelector) {
   const card = new Card(data, templateSelector, viewFullScreenImage);
   const cardElement = card.generateCard();
+  return cardElement
+};
+
+//Добавить карточку
+function addCard(cardElement) {
   blockElements.prepend(cardElement);
 };
 
-
 //Создает карточки из массива
 initialCards.forEach((item) => {
-  createCard(item, '#element')
+  addCard(createCard(item, '#element'))
 });
 
 
@@ -96,12 +100,12 @@ function listenEscape(evt) {
 //ОБРАБОТЧИКИ
 
 //открывает и зарывает попап с фотографией
-function viewFullScreenImage(card) {
+function viewFullScreenImage(name, link) {
 
   openPopUp(popUpViewImage);
-  imageForPopUp.src = `${card.querySelector('.element__image').src}`;
-  imageForPopUp.alt = `${card.querySelector('.element__title').textContent}`;
-  figcaptionForPopUp.textContent = `${card.querySelector('.element__title').textContent}`;
+  imageForPopUp.src = link;
+  imageForPopUp.alt = name;
+  figcaptionForPopUp.textContent = name;
 
 };
 
@@ -161,10 +165,10 @@ buttonClosePopUpAddCards.addEventListener('click', function() {
 formAddCard.addEventListener('submit', function(evt) {
   //evt.preventDefault();
 
-  createCard({
+  addCard(createCard({
     name: inputTitleAddCards.value,
     link: inputImageAddCards.value,
-  }, '#element')
+  }, '#element'))
 
   closePopUp(popUpUserAddCards);
   formAddCard.reset();

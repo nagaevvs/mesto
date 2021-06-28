@@ -69,7 +69,7 @@ class FormValidator {
       });
     });
 
-    this.toggleButtonState(this._inputList);
+    this.toggleButtonState();
   }
 
   enableValidation() {

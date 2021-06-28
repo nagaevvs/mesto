@@ -34,7 +34,7 @@ class Card {
     });
 
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._viewFullScreenImage(this._element);
+      this._viewFullScreenImage(this._name, this._link);
     });
   }
 
