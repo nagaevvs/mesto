@@ -4,23 +4,34 @@ export default class PopupWithConfirm extends Popup {
     constructor(popupSelector, submitAction, closeKey) {
         super(popupSelector, closeKey);
         this._submitAction = submitAction
-        this._buttonSelector = this._popupSelector.querySelector('.popup__button')
-        this._her = []
-        this._card = []
+        this._button = this._popup.querySelector('.popup__button')
+
+        this._submitButtonText = this._button.textContent;
+        this._cardId = null
+        this._card = null
     }
 
-    getId(card, id) {
+    renderLoading(isLoading, text1) {
+        if (isLoading) {
+            this._button.textContent = text1
+        } else {
+            this._button.textContent = this._submitButtonText
+        }
+    }
+
+
+    setData(card, id) {
+        this._cardId = id
         this._card = card
-        this._her = id
     }
 
 
     setEventListeners() {
         super.setEventListeners();
-        this._buttonSelector.addEventListener('click', (evt) => {
+        this._button.addEventListener('click', (evt) => {
             evt.preventDefault();
-            this._submitAction(this._card, this._her)
-            this.close()
+            this._submitAction(this, this._card, this._cardId)
+
         })
     }
 
