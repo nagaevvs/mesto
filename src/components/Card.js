@@ -49,7 +49,6 @@ class Card {
             this._deleteButton.removeAttribute('hidden')
         }
         if (this._data.likes.some(e => e._id === this._userId)) {
-            console.log('хех')
             this._likeButton.classList.add('element__like_active')
         }
         return this._element;

@@ -11,9 +11,6 @@ class FormValidator {
         this._submitButton = this._form.querySelector(`${this._submitButtonSelector}`);
     }
 
-    test() {
-        console.log('Проверочка')
-    }
 
     _showInputError(inputElement, errorMessage) {
         const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
