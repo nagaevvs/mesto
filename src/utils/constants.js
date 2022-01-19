@@ -22,3 +22,5 @@ export const jobSelector = 'profile__about';
 
 //Селектор кнопки закрытия попапа
 export const closeKey = 'Escape'
+
+export const avatarSelector = 'profile__avatar'

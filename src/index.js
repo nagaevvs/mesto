@@ -3,9 +3,6 @@ import './pages/index.css';
 //Конфиг валидациии форм
 import configValidation from './utils/configValidation.js';
 
-//Массив карточек
-import initialCards from './utils/initial-сards.js';
-
 //Классы
 import Api from './components/Api';
 import Card from './components/Card.js';
@@ -28,8 +25,8 @@ import { templateSelector } from './utils/constants.js';
 import { nameSelector } from './utils/constants.js';
 import { jobSelector } from './utils/constants.js';
 import { closeKey } from './utils/constants.js';
+import { avatarSelector } from './utils/constants.js';
 
-const avatarSelector = 'profile__avatar'
 
 
 
@@ -42,34 +39,35 @@ function handleCardClick(name, link) {
 
 
 
-function handleLikeClick(data) {
-    console.log(data._id)
+function handleLikeClick(card, data, thisElement) {
+
+
+
+
     if (data.likes.some(e => e._id === this._myId)) {
-        console.log('дизлайк')
         api.disLikeCard(data._id)
             .then((res) => {
-                console.log(res)
-
-
+                card.setLikes(res)
+                thisElement.querySelector('.element__like').classList.toggle('element__like_active');
+                thisElement.querySelector('.element__counter').textContent = res.likes.length
             })
             .catch((err) => {
                 console.log(err);
             });
-
-
 
     } else {
-        console.log('лайк')
+
         api.likeCard(data._id)
             .then((res) => {
-                console.log(res)
-
-
-
+                card.setLikes(res)
+                thisElement.querySelector('.element__like').classList.toggle('element__like_active');
+                thisElement.querySelector('.element__counter').textContent = res.likes.length
             })
             .catch((err) => {
                 console.log(err);
             });
+
+
 
 
     }
@@ -81,9 +79,9 @@ function handleLikeClick(data) {
 
 
 
-function handleDeleteIconClick(card) {
-    console.log(card)
-    popupWithConfirm.getId(card)
+function handleDeleteIconClick(card, id) {
+
+    popupWithConfirm.getId(card, id)
     popupWithConfirm.open()
 
 
@@ -91,53 +89,74 @@ function handleDeleteIconClick(card) {
 
 
 
+function callbackPopupSubmit(card, id) {
+    api.deleteCard(id)
+        .then((data) => {
+            console.log(data)
+            card._deleteCard()
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 //Инициализация классов
 
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30',
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34/',
     headers: {
-        authorization: '98aec261-4abe-4fd2-b884-8bf15525cbfc',
+        authorization: '774c99e1-4cb0-4e4b-b24e-632a0b4c7684',
         'Content-Type': 'application/json'
     }
 });
 
+
+
+const cardList = new Section({ renderer: (item) => rendererCard(item) }, cardListSection);
+
+
+const rendererCard = (item) => {
+    const card = new Card(item, templateSelector, handleCardClick, handleDeleteIconClick, handleLikeClick);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+}
+
+function callbackAddCard(data) {
+    renderLoadingCreate(true, '#add-card-button')
+    api.addNewCard(data.title, data.image)
+        .then((res) => {
+            rendererCard(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            renderLoadingCreate(false, '#add-card-button')
+        });
+
+}
+
 //Загружаем изначальный масив карточек
 api.getInitialCards()
     .then((result) => {
-        console.log(result)
-        const cardList = new Section({
-                items: result,
-                renderer: rendererCard
-            },
-            cardListSection
-        );
-        cardList.renderItems();
-
-        function rendererCard(item) {
-            const card = new Card(item, templateSelector, handleCardClick, handleDeleteIconClick, handleLikeClick);
-            //card.test()
-            const cardElement = card.generateCard();
-            cardList.addItem(cardElement);
-        }
+        console.log('изначальный массив карточек', result)
+        cardList.renderItems(result);
     })
     .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
+        console.log(err);
     });
-
-
-
-
 
 
 //Загружает данные профиля
 api.getUserData()
     .then((data) => {
-        console.log(data)
+        console.log('Данные пользователя при загрузке', data)
         userInfo.setUserInfo(data.name, data.about, data.avatar)
     })
     .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
+        console.log(err);
     });
 
 
@@ -172,10 +191,7 @@ function callbackEditAvatar(data) {
     renderLoading(true, '#refresh-avatar-button')
     api.refreshAvatar(data.newAvatar)
         .then((data) => {
-            console.log(data)
             document.querySelector('.profile__avatar').src = data.avatar
-
-
         })
         .catch((err) => {
             console.log(err);
@@ -205,10 +221,6 @@ function renderLoadingCreate(isLoading, elementSelector) {
 }
 
 
-
-
-
-
 function callbackEditProfile(data) {
     renderLoading(true, '#edit-profile-button')
     api.editUserData(data.name, data.job)
@@ -216,13 +228,9 @@ function callbackEditProfile(data) {
             console.log(data)
             document.querySelector('.profile__name').textContent = data.name
             document.querySelector('.profile__about').textContent = data.about
-
-
-
         })
         .catch((err) => {
             console.log(err);
-
         })
         .finally(() => {
             renderLoading(false, '#edit-profile-button')
@@ -230,46 +238,9 @@ function callbackEditProfile(data) {
 
 }
 
-
-function callbackPopupSubmit(id) {
-    api.deleteCard(id)
-        .then((data) => {
-            console.log(data)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-
-
-
-function callbackAddCard(data) {
-    renderLoadingCreate(true, '#add-card-button')
-    api.addNewCard(data.title, data.image)
-        .then((data) => {
-            console.log(data)
-        })
-        .catch((err) => {
-            console.log(err); // выведем ошибку в консоль
-        })
-        .finally(() => {
-            renderLoadingCreate(false, '#add-card-button')
-        });
-
-    //const item = {}
-    //item.name = data.title;
-    //item.link = data.image;
-    //rendererCard(item)
-}
-
-
-
 document.querySelector('.profile__avatar-wrapper').addEventListener('click', function() {
     popupWithFormEditAvatar.open()
 });
-
-
 
 
 //Кнопка открывает попап для изменения данных в профиле 

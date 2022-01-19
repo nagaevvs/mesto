@@ -9,16 +9,16 @@ class Card {
         this._ownerID = data.owner._id
         this._handleDeleteIconClick = handleDeleteIconClick
         this._handleLikeClick = handleLikeClick
+
         this._id = data._id
-        this._myId = '547c7d5dc6a70b1792155238'
+        this._myId = 'a2bac1258fa18ee519054f71'
+
 
     }
 
-    test() {
-        console.log(this._ownerID)
-        console.log('работает')
+    setLikes(array) {
+        this._data = array;
     }
-
 
 
     _getTemplate() {
@@ -50,13 +50,11 @@ class Card {
 
     _setEventListeners() {
         this._element.querySelector('.element__like').addEventListener('click', () => {
-            //this._likeCard();
-            this._handleLikeClick(this._data)
+            this._handleLikeClick(this, this._data, this._element)
         });
 
         this._element.querySelector('.element__delete').addEventListener('click', () => {
-            //this._deleteCard();
-            this._handleDeleteIconClick(this._id)
+            this._handleDeleteIconClick(this, this._id)
         });
 
         this._element.querySelector('.element__image').addEventListener('click', () => {
