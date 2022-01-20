@@ -12,6 +12,13 @@ class FormValidator {
     }
 
 
+    resetValidation() {
+        this.hideError()
+        this.toggleButtonState()
+    }
+
+
+
     _showInputError(inputElement, errorMessage) {
         const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.add(`${this._inputErrorClass}`);

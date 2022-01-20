@@ -12,6 +12,9 @@ export const buttonOpenPopUpAddCards = document.querySelector('.profile__add-but
 //Форма добавления новой карточки
 export const formAddCard = document.forms.formcard;
 
+//Форма редактирования профиля
+export const formEditAvatar = document.forms.formavatar
+
 //Контейнер для созданных карточек
 export const cardListSection = '.elements';
 export const templateSelector = '#element';

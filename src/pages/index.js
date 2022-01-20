@@ -24,6 +24,9 @@ import { nameSelector } from '../utils/constants.js';
 import { jobSelector } from '../utils/constants.js';
 import { closeKey } from '../utils/constants.js';
 import { avatarSelector } from '../utils/constants.js';
+import { formEditAvatar } from '../utils/constants.js';
+import { formEditProfile } from '../utils/constants.js';
+import { formAddCard } from '../utils/constants.js';
 
 function handleCardClick(name, link) {
     popupWithImage.open(name, link)
@@ -52,16 +55,10 @@ function handleLikeClick(card, data) {
 }
 
 
-
 function handleDeleteIconClick(card, id) {
-
     popupWithConfirm.setData(card, id)
     popupWithConfirm.open()
-
-
 }
-
-
 
 function callbackPopupSubmit(popup, card, id) {
 
@@ -83,7 +80,6 @@ function callbackPopupSubmit(popup, card, id) {
 
 //Инициализация классов
 
-
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34/',
     headers: {
@@ -91,7 +87,6 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 });
-
 
 
 const cardList = new Section({ renderer: (item) => rendererCard(item) }, cardListSection);
@@ -121,8 +116,6 @@ function callbackAddCard(popup, data) {
 }
 
 
-
-
 Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userData, cards]) => {
         userInfo.setUserInfo(userData)
@@ -131,18 +124,6 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     .catch(err => {
         console.log(err);
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector })
@@ -163,8 +144,6 @@ const popupWithImage = new PopupWithImage('#popup-view-image', closeKey)
 popupWithImage.setEventListeners()
 
 
-
-
 const formValidators = {}
 
 // Включение валидации
@@ -181,14 +160,12 @@ const enableValidation = (config) => {
 enableValidation(configValidation);
 
 
-
 function callbackEditAvatar(popup, data) {
 
     popup.renderLoading(true, 'Сохранение...')
     api.refreshAvatar(data.avatar)
         .then((userData) => {
             userInfo.setUserInfo(userData)
-            document.querySelector('.profile__avatar').src = userInfo.getUserInfo().userAvatar
             popup.close()
         })
         .catch((err) => {
@@ -200,33 +177,12 @@ function callbackEditAvatar(popup, data) {
 }
 
 
-function renderLoadingCreate(isLoading, elementSelector) {
-    if (isLoading) {
-        document.querySelector(elementSelector).textContent = 'Создание...'
-    } else {
-        document.querySelector(elementSelector).textContent = 'Создать'
-
-    }
-}
-
-function renderDelete(isLoading, elementSelector) {
-    if (isLoading) {
-        document.querySelector(elementSelector).textContent = 'Удаление...'
-    } else {
-        document.querySelector(elementSelector).textContent = 'Да'
-
-    }
-}
-
 
 function callbackEditProfile(popup, data) {
     popup.renderLoading(true, 'Сохранение...')
     api.editUserData(data.name, data.job)
         .then((userData) => {
-
             userInfo.setUserInfo(userData)
-            document.querySelector('.profile__name').textContent = userInfo.getUserInfo().userName
-            document.querySelector('.profile__about').textContent = userInfo.getUserInfo().userAbout
             popup.close()
         })
         .catch((err) => {
@@ -240,22 +196,18 @@ function callbackEditProfile(popup, data) {
 
 document.querySelector('.profile__avatar-wrapper').addEventListener('click', function() {
     popupWithFormEditAvatar.open()
-    formValidators[formavatar.getAttribute('name')].hideError()
-    formValidators[formavatar.getAttribute('name')].toggleButtonState()
-
+    formValidators[formEditAvatar.getAttribute('name')].resetValidation()
 });
 
 editButton.addEventListener('click', function() {
     popupWithFormEditProfile.open()
-    formValidators[formprofile.getAttribute('name')].hideError()
-    formValidators[formprofile.getAttribute('name')].toggleButtonState()
-    inputNameEditProfile.value = userInfo.getUserInfo().userName;
-    inputJobEditProfile.value = userInfo.getUserInfo().userAbout;
-
+    formValidators[formEditProfile.getAttribute('name')].resetValidation()
+    const { userName, userAbout } = userInfo.getUserInfo()
+    inputNameEditProfile.value = userName;
+    inputJobEditProfile.value = userAbout;
 });
 
 buttonOpenPopUpAddCards.addEventListener('click', function() {
     popupWithFormAddCard.open()
-    formValidators[formcard.getAttribute('name')].hideError()
-    formValidators[formcard.getAttribute('name')].toggleButtonState()
+    formValidators[formAddCard.getAttribute('name')].resetValidation()
 });
